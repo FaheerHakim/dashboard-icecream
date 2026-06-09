@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted } from 'vue'
 
 let orders = reactive({data: []});
-let orderId;
+let orderId = ref('');
 let name = ref('');
 let email = ref('');
 let phone = ref('');
@@ -10,23 +10,25 @@ let coneFlavor = ref('');
 let iceFlavors = ref('');
 let quantity = ref('');
 let notes = ref('');
+let status = ref('');
+let showPopup = ref(false);
 
 onMounted( () => {
     const api_url = 'http://localhost:3000/api/v1/icecream';
     fetch(api_url) 
-    .then((respons) => respons.json())
+    .then(response => response.json())
     .then((data) => {
         orders.data = data.data.icecream;
     })
 })
 
 const getOneOrder = (id) => {
-    const api_url = 'http://localhost:3000/api/v1/icecream/${id}';
+    const api_url = `http://localhost:3000/api/v1/icecream/${id}`;
     fetch(api_url) 
-    .then((response) => respons.json())
-    .then((data) => {
+    .then(response => response.json())
+    .then(data => {
         const order = data.data.oneIcecream;
-        orderId = order._id;
+        orderId.value = order._id;
         name.value = order.name;
         email.value = order.email;
         phone.value = order.phone;
@@ -36,25 +38,20 @@ const getOneOrder = (id) => {
         status.value = order.status;
 
         // show the pop up card
-        window.location.href = "#popup1";
+showPopup.value = true;
     })
         .catch((error) => {
-        console.log(error);
+        console.log("Er ging iets mis bij het ophalen:", error);
 
 
 })
 }
 
-
-
-
-
-
 </script>
 
 <template>
 <div v-for="item in orders.data" :key="item" class="order" >
-    <img src="" alt="">
+    <!--<img src="" alt="">-->
     <h3>{{item.orderId}}</h3>
     <p class="client"> {{ item.name }}</p>
     <p class="status">statuus: <span>{{item.status }} </span></p>
@@ -63,20 +60,20 @@ const getOneOrder = (id) => {
 </div>
 
 <!-- make a pop up card with information of one order -->
-    <div id="popup1" class="overlay">
+<div class="overlay" :class="{ active: showPopup }">
     <div class="popup">
-        <h2>{{orderId}}</h2>
-        <a class="close" href="#">&times;</a>
+        <h2>Bestelling: {{ orderId }}</h2>
+<a class="close" href="#" @click.prevent="showPopup = false">&times;</a>
         <div class="content">
             <p>Naam: <span>{{name}}</span></p>
             <p>E-mail: <span>{{email}}</span></p>
             <p>Gsm nummer: <span>{{phone}}</span> </p>
             <p>Hoorntje Smaak: <span>{{coneFlavor}}</span></p>
-            <p>Ijsje Smaak: <span>{{iceFlavor}}</span></p>
+            <p>Ijsje Smaak: <span>{{iceFlavors}}</span></p>
             <p>Aantal: <span> {{quantity}}</span></p>
             <p>Statuus: 
                 <select v-model="status">
-                    <option disabled value=""></option>
+                    <!--<option disabled value=""></option>-->
                     <option>Te verwerken</option>
                     <option>Geannuleerd</option>
                     <option>Verzonden</option>
@@ -173,7 +170,7 @@ color: #FAFAFA;
   visibility: hidden;
   opacity: 0;
 }
-.overlay:target {
+.overlay.active {
   visibility: visible;
   opacity: 1;
 }

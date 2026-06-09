@@ -21,7 +21,7 @@ onMounted( () => {
 })
 
 const getOneOrder = (id) => {
-    const api_url = 'http://localhost:3000/api/v1/icecream';
+    const api_url = 'http://localhost:3000/api/v1/icecream/${id}';
     fetch(api_url) 
     .then((response) => respons.json())
     .then((data) => {
@@ -35,22 +35,18 @@ const getOneOrder = (id) => {
         quantity.value = order.quantity;
         status.value = order.status;
 
-
+        // show the pop up card
+        window.location.href = "#popup1";
     })
-    const order = {
-        name: name.value,
-        email: email.value,
-        phone: phone.value,
-        coneFlavor: coneFlavor.value,
-        iceFlavors: iceFlavors.value,
-        quantity: quantity.value,
-        notes: notes.value,
-        statuus: status.value,
-        timestamps: timestamps.value,
+        .catch((error) => {
+        console.log(error);
 
-    }
 
+})
 }
+
+
+
 
 
 
@@ -63,7 +59,7 @@ const getOneOrder = (id) => {
     <p class="client"> {{ item.name }}</p>
     <p class="status">statuus: <span>{{item.status }} </span></p>
     <button class=" details" @click.prevent="getOneOrder(item._id)">Details</button>
-    <button class="delete" @click.prevent="deleteOrder(item._id)">Verwijderen</button>
+    <button class="delete" @click.prevent="deleteOneOrder(item._id)">Verwijderen</button>
 </div>
 
 <!-- make a pop up card with information of one order -->

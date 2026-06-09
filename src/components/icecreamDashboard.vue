@@ -14,14 +14,19 @@ let quantity = ref('');
 let notes = ref('');
 
 onMounted( () => {
-    fetch(api_url)
+    fetch(api_url) 
     .then((respons) => respons.json())
     .then((data) => {
-        orders.data = data.data.content;
+        orders.data = data.data.icecream;
     })
 })
 
-const getOneOrder = () => {
+const getOneOrder = (id) => {
+    fetch(api_url) 
+    .then((response) => respons.json())
+    .then((data) => {
+        const order = data.data.oneIcecream;
+    })
     const order = {
         name: name.value,
         email: email.value,

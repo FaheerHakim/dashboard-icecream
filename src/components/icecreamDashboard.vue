@@ -1,5 +1,42 @@
 <script setup>
 import { ref} from 'vue'
+const api_url = 'http://localhost:3000/api/v1/icecream'
+
+
+let orders = reactive({data: []});
+let orderId;
+let name = ref('');
+let email = ref('');
+let phone = ref('');
+let coneFlavor = ref('');
+let iceFlavors = ref('');
+let quantity = ref('');
+let notes = ref('');
+
+onMounted( () => {
+    fetch(api_url)
+    .then((respons) => respons.json())
+    .then((data) => {
+        orders.data = data.data.content;
+    })
+})
+
+const getOneOrder = () => {
+    const order = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        coneFlavor: coneFlavor.value,
+        iceFlavors: iceFlavors.value,
+        quantity: quantity.value,
+        notes: notes.value,
+        statuus: status.value,
+        timestamps: timestamps.value,
+
+    }
+
+}
+
 
 
 </script>

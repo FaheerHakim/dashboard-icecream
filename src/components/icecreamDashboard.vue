@@ -142,22 +142,24 @@ display: inline-block;
 margin: 0.5rem 0.75rem;
 padding:  0.75rem 1rem;
 border: none;
-border-radius: 0.25rem;
+border-radius: 50px;
 font-size: 14px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .details {
 background: #00A1E4;
 color: #FAFAFA;
+
 }
 .details:hover {
 background: #FFF200;
-color: #FAFAFA;
+color: #4E3629;
 }
 .order .delete {
 background: #4E3629;
-color: #4FA83D;
+color: #FFF200;
 border: 1px solid #FFF200;
+border-radius: 50px;
 }
 .order .delete:hover {
 background: #4FA83D;

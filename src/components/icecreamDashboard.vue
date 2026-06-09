@@ -1,6 +1,5 @@
 <script setup>
 import { ref} from 'vue'
-const api_url = 'http://localhost:3000/api/v1/icecream'
 
 
 let orders = reactive({data: []});
@@ -14,6 +13,7 @@ let quantity = ref('');
 let notes = ref('');
 
 onMounted( () => {
+    const api_url = 'http://localhost:3000/api/v1/icecream';
     fetch(api_url) 
     .then((respons) => respons.json())
     .then((data) => {
@@ -22,10 +22,21 @@ onMounted( () => {
 })
 
 const getOneOrder = (id) => {
+    const api_url = 'http://localhost:3000/api/v1/icecream';
     fetch(api_url) 
     .then((response) => respons.json())
     .then((data) => {
         const order = data.data.oneIcecream;
+        orderId = order._id;
+        name.value = order.name;
+        email.value = order.email;
+        phone.value = order.phone;
+        coneFlavor.value = order.coneFlavor;
+        iceFlavors.value = order.iceFlavors;
+        quantity.value = order.quantity;
+        status.value = order.status;
+
+
     })
     const order = {
         name: name.value,

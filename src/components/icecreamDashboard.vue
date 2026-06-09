@@ -38,13 +38,59 @@ const getOneOrder = (id) => {
         status.value = order.status;
 
         // show the pop up card
-showPopup.value = true;
+        showPopup.value = true;
     })
         .catch((error) => {
         console.log("Er ging iets mis bij het ophalen:", error);
 
 
 })
+}
+
+const deleteOneOrder = (id) => {
+        const api_url = `http://localhost:3000/api/v1/icecream/${id}`;
+        fetch(api_url, {
+        method: 'DELETE',
+    }) 
+        .then(response => response.json())
+        .then(data => {
+
+        //get the index (orderI id) of the item
+        const index2 = orders.data.findIndex(order => order._id === id);
+
+        //remove the item from the array
+        orders.data.splice(index2, 1); 
+})
+        .catch((error) => {
+            console.log(error);
+        }) 
+}
+
+const updateOneOrder = (id) => {
+    const update = {status: status.value}
+         const api_url = `http://localhost:3000/api/v1/icecream/${id}`;
+         fetch(api_url, {
+         method: 'PUT',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(update),
+         })
+         .then(response => response.json())
+         .then(data => {
+          data.data.oneIcecream.status = status.value;
+
+          const index = orders.data.findIndex(order => order._id === id);
+          orders.data[index].status = status.value;
+
+          //close the popup card
+          showPopup.value = false;
+
+         
+         })
+         .catch((error) => {
+            console.log(error);
+         })
 }
 
 </script>
@@ -80,7 +126,7 @@ showPopup.value = true;
                 </select>
             </p>
         </div>
-        <button class="details update" @click.prevent="updateOrder( orderId)">Update</button>
+        <button class="details update" @click.prevent="updateOneOrder( orderId)">Update</button>
     </div>
 </div>
 </template>

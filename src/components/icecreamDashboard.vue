@@ -14,7 +14,7 @@ let status = ref('');
 let showPopup = ref(false);
 
 onMounted( () => {
-    const api_url = 'https://icecreamapi-08s6.onrender.com/';
+    const api_url = 'https://icecreamapi-08s6.onrender.com/api/v1/icecream';
     fetch(api_url) 
     .then(response => response.json())
     .then((data) => {
@@ -23,7 +23,7 @@ onMounted( () => {
 })
 
 const getOneOrder = (id) => {
-    const api_url = `https://icecreamapi-08s6.onrender.com/${id}`;
+    const api_url = `https://icecreamapi-08s6.onrender.com/api/v1/icecream/${id}`;
     fetch(api_url) 
     .then(response => response.json())
     .then(data => {
@@ -48,7 +48,7 @@ const getOneOrder = (id) => {
 }
 
 const deleteOneOrder = (id) => {
-        const api_url = `https://icecreamapi-08s6.onrender.com/${id}`;
+        const api_url = `https://icecreamapi-08s6.onrender.com/api/v1/icecream/${id}`;
         fetch(api_url, {
         method: 'DELETE',
     }) 
@@ -68,7 +68,7 @@ const deleteOneOrder = (id) => {
 
 const updateOneOrder = (id) => {
     const update = {status: status.value}
-         const api_url = `https://icecreamapi-08s6.onrender.com/${id}`;
+         const api_url = `https://icecreamapi-08s6.onrender.com/api/v1/icecream/${id}`;
          fetch(api_url, {
          method: 'PUT',
          headers: {
